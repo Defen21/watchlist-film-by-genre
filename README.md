@@ -1,4 +1,4 @@
-# Proposal Tugas Besar Struktur Data
+# Tugas Besar Struktur Data
 ## Judul: Aplikasi Manajemen Watchlist Film Berbasis Genre
 
 ### Deskripsi

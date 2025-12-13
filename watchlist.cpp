@@ -1,6 +1,4 @@
-#include "header.h"
-#include <iostream>
-using namespace std;
+#include "watchlist.h"
 
 /* ================= CREATE ================= */
 
@@ -38,7 +36,7 @@ adrRelation allocateRelation(adrMovie M) {
     return R;
 }
 
-/* ================= INSERT GENRE ================= */
+/* ================= INSERT ================= */
 
 void insertFirstGenre(ListGenre &LG, adrGenre P) {
     P->next = LG.first;
@@ -56,48 +54,6 @@ void insertLastGenre(ListGenre &LG, adrGenre P) {
     }
 }
 
-void insertAfterGenre(adrGenre Prec, adrGenre P) {
-    if (Prec != nullptr) {
-        P->next = Prec->next;
-        Prec->next = P;
-    }
-}
-
-/* ================= DELETE GENRE ================= */
-
-void deleteFirstGenre(ListGenre &LG, adrGenre &P) {
-    if (LG.first != nullptr) {
-        P = LG.first;
-        LG.first = P->next;
-        P->next = nullptr;
-    }
-}
-
-void deleteLastGenre(ListGenre &LG, adrGenre &P) {
-    if (LG.first != nullptr) {
-        if (LG.first->next == nullptr) {
-            P = LG.first;
-            LG.first = nullptr;
-        } else {
-            adrGenre Q = LG.first;
-            while (Q->next->next != nullptr)
-                Q = Q->next;
-            P = Q->next;
-            Q->next = nullptr;
-        }
-    }
-}
-
-void deleteAfterGenre(adrGenre Prec, adrGenre &P) {
-    if (Prec != nullptr && Prec->next != nullptr) {
-        P = Prec->next;
-        Prec->next = P->next;
-        P->next = nullptr;
-    }
-}
-
-/* ================= INSERT MOVIE ================= */
-
 void insertFirstMovie(ListMovie &LM, adrMovie P) {
     P->next = LM.first;
     LM.first = P;
@@ -111,46 +67,6 @@ void insertLastMovie(ListMovie &LM, adrMovie P) {
         while (Q->next != nullptr)
             Q = Q->next;
         Q->next = P;
-    }
-}
-
-void insertAfterMovie(adrMovie Prec, adrMovie P) {
-    if (Prec != nullptr) {
-        P->next = Prec->next;
-        Prec->next = P;
-    }
-}
-
-/* ================= DELETE MOVIE ================= */
-
-void deleteFirstMovie(ListMovie &LM, adrMovie &P) {
-    if (LM.first != nullptr) {
-        P = LM.first;
-        LM.first = P->next;
-        P->next = nullptr;
-    }
-}
-
-void deleteLastMovie(ListMovie &LM, adrMovie &P) {
-    if (LM.first != nullptr) {
-        if (LM.first->next == nullptr) {
-            P = LM.first;
-            LM.first = nullptr;
-        } else {
-            adrMovie Q = LM.first;
-            while (Q->next->next != nullptr)
-                Q = Q->next;
-            P = Q->next;
-            Q->next = nullptr;
-        }
-    }
-}
-
-void deleteAfterMovie(adrMovie Prec, adrMovie &P) {
-    if (Prec != nullptr && Prec->next != nullptr) {
-        P = Prec->next;
-        Prec->next = P->next;
-        P->next = nullptr;
     }
 }
 
@@ -203,24 +119,28 @@ void showAllGenres(ListGenre LG) {
 void showAllMovies(ListMovie LM) {
     adrMovie M = LM.first;
     while (M != nullptr) {
-        cout << "- " << M->info.title << endl;
+        cout << "- " << M->info.title
+             << " (" << M->info.year << ")"
+             << " | Rating: " << M->info.rating << endl;
         M = M->next;
-    }
-}
-
-void showMoviesOfGenre(adrGenre G) {
-    cout << "Genre: " << G->info.name << endl;
-    adrRelation R = G->relFirst;
-    while (R != nullptr) {
-        cout << "  - " << R->child->info.title << endl;
-        R = R->next;
     }
 }
 
 void showAllGenreWithMovies(ListGenre LG) {
     adrGenre G = LG.first;
     while (G != nullptr) {
-        showMoviesOfGenre(G);
+        cout << "Genre: " << G->info.name << endl;
+        adrRelation R = G->relFirst;
+
+        if (R == nullptr)
+            cout << "  (Tidak ada movie)" << endl;
+
+        while (R != nullptr) {
+            cout << "  - " << R->child->info.title
+                 << " (" << R->child->info.year << ")"
+                 << " | Rating: " << R->child->info.rating << endl;
+            R = R->next;
+        }
         G = G->next;
     }
 }
@@ -228,10 +148,14 @@ void showAllGenreWithMovies(ListGenre LG) {
 void showMovieWithGenres(ListGenre LG, ListMovie LM) {
     adrMovie M = LM.first;
     while (M != nullptr) {
-        cout << "Movie: " << M->info.title << " | Genre: ";
-        bool found = false;
+        cout << "Movie: " << M->info.title
+             << " (" << M->info.year << ")"
+             << " | Rating: " << M->info.rating
+             << " | Genre: ";
 
+        bool found = false;
         adrGenre G = LG.first;
+
         while (G != nullptr) {
             adrRelation R = G->relFirst;
             while (R != nullptr) {
@@ -244,23 +168,14 @@ void showMovieWithGenres(ListGenre LG, ListMovie LM) {
             G = G->next;
         }
 
-        if (!found) cout << "Tidak ada";
+        if (!found)
+            cout << "Tidak ada";
         cout << endl;
         M = M->next;
     }
 }
 
 /* ================= COUNT ================= */
-
-int countRelationGenre(adrGenre G) {
-    int count = 0;
-    adrRelation R = G->relFirst;
-    while (R != nullptr) {
-        count++;
-        R = R->next;
-    }
-    return count;
-}
 
 int countRelationMovie(ListGenre LG, adrMovie M) {
     int count = 0;
@@ -287,4 +202,3 @@ int countUnrelatedMovies(ListGenre LG, ListMovie LM) {
     }
     return count;
 }
-

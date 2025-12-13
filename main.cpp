@@ -55,7 +55,7 @@ int main() {
             if (G && M)
                 connectGenreMovie(G, M);
             else
-                cout << "Genre/Movie tidak ditemukan\n";
+                cout << "Genre atau Movie tidak ditemukan!\n";
         }
         else if (choice == 4)
             showAllGenres(LG);

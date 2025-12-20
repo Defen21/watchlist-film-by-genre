@@ -1,99 +1,93 @@
-#ifndef HEADER_H_INCLUDED
-#define HEADER_H_INCLUDED
-
+#ifndef WATCHLIST_H_INCLUDED
+#define WATCHLIST_H_INCLUDED
 #include <iostream>
 #include <string>
 using namespace std;
 
-/* ================= CHILD (MOVIE) ================= */
+/* ========= STRUCT ========= */
 
 struct Movie {
     string title;
     int year;
     float rating;
+    Movie* next;
 };
 
-struct elmMovie;
-typedef elmMovie* adrMovie;
-
-struct elmMovie {
-    Movie info;
-    adrMovie next;
+struct Relation {
+    Movie* movie;
+    Relation* next;
 };
-
-struct ListMovie {
-    adrMovie first;
-};
-
-/* ================= RELATION ================= */
-
-struct elmRelation;
-typedef elmRelation* adrRelation;
-
-struct elmRelation {
-    adrMovie child;
-    adrRelation next;
-};
-
-/* ================= PARENT (GENRE) ================= */
 
 struct Genre {
     string name;
+    Genre* next;
+    Relation* relFirst;
 };
 
-struct elmGenre;
-typedef elmGenre* adrGenre;
+/* ========= LIST ========= */
 
-struct elmGenre {
-    Genre info;
-    adrGenre next;
-    adrRelation relFirst;
+struct ListMovie {
+    Movie* first;
 };
 
 struct ListGenre {
-    adrGenre first;
+    Genre* first;
 };
 
-/* ================= CREATE ================= */
-
-void createGenreList(ListGenre &LG);
+/* ========= CREATE ========= */
 void createMovieList(ListMovie &LM);
+void createGenreList(ListGenre &LG);
 
-/* ================= ALLOCATE ================= */
+/* ========= ALLOCATE ========= */
+Movie* allocateMovie(string title, int year, float rating);
+Genre* allocateGenre(string name);
+Relation* allocateRelation(Movie* M);
 
-adrGenre allocateGenre(string name);
-adrMovie allocateMovie(string title, int year, float rating);
-adrRelation allocateRelation(adrMovie M);
+/* ========= INSERT ========= */
+// Genre
+void insertFirstGenre(ListGenre &LG, Genre* P);
+void insertLastGenre(ListGenre &LG, Genre* P);
+void insertAfterGenre(Genre* Prec, Genre* P);
 
-/* ================= INSERT GENRE ================= */
+// Movie
+void insertFirstMovie(ListMovie &LM, Movie* P);
+void insertLastMovie(ListMovie &LM, Movie* P);
+void insertAfterMovie(Movie* Prec, Movie* P);
 
-void insertFirstGenre(ListGenre &LG, adrGenre P);
-void insertLastGenre(ListGenre &LG, adrGenre P);
+// Relation
+void connectGenreMovie(Genre* G, Movie* M);
 
-/* ================= INSERT MOVIE ================= */
+/* ========= DELETE ========= */
+// Genre
+void deleteFirstGenre(ListGenre &LG, Genre* &P);
+void deleteLastGenre(ListGenre &LG, Genre* &P);
+void deleteAfterGenre(Genre* Prec, Genre* &P);
 
-void insertFirstMovie(ListMovie &LM, adrMovie P);
-void insertLastMovie(ListMovie &LM, adrMovie P);
+// Movie
+void deleteFirstMovie(ListMovie &LM, Movie* &P);
+void deleteLastMovie(ListMovie &LM, Movie* &P);
+void deleteAfterMovie(Movie* Prec, Movie* &P);
 
-/* ================= RELATION ================= */
+// Relation
+void deleteRelation(Genre* G, Movie* M);
 
-void connectGenreMovie(adrGenre G, adrMovie M);
+/* ========= FIND ========= */
+Genre* findGenre(ListGenre LG, string name);
+Movie* findMovie(ListMovie LM, string title);
 
-/* ================= FIND ================= */
-
-adrGenre findGenre(ListGenre LG, string name);
-adrMovie findMovie(ListMovie LM, string title);
-
-/* ================= SHOW ================= */
-
+/* ========= SHOW ========= */
 void showAllGenres(ListGenre LG);
 void showAllMovies(ListMovie LM);
 void showAllGenreWithMovies(ListGenre LG);
 void showMovieWithGenres(ListGenre LG, ListMovie LM);
+void showGenresOfMovie(ListGenre LG, Movie* M);
 
-/* ================= COUNT ================= */
-
-int countRelationMovie(ListGenre LG, adrMovie M);
+/* ========= COUNT ========= */
+int countRelationGenre(Genre* G);
+int countRelationMovie(ListGenre LG, Movie* M);
 int countUnrelatedMovies(ListGenre LG, ListMovie LM);
 
-#endif
+/* ========= EDIT ========= */
+void editRelation(Genre* G, Movie* oldM, Movie* newM);
+
+#endif // WATCHLIST_H_INCLUDED

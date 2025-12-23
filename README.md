@@ -1,10 +1,10 @@
-## *TUGAS BESAR STRUKTUR DATA*
+## **TUGAS BESAR STRUKTUR DATA**
 
-### *Judul*
+### **Judul**
 
 *Aplikasi Manajemen Watchlist Film Berbasis Genre Menggunakan Multi-Linked List*
 
-## *Deskripsi*
+## **Deskripsi**
 
 Aplikasi Manajemen Watchlist Film ini dirancang untuk membantu pengguna dalam mengelola daftar film yang ingin ditonton secara terstruktur dan terorganisir. Film-film pada watchlist dapat dikelompokkan berdasarkan *genre*, sehingga memudahkan pengguna dalam pencarian, pengelolaan, serta analisis data film.
 
@@ -15,7 +15,7 @@ Program ini mengimplementasikan *struktur data Multi-Linked List (Relasi One-to-
 
 Struktur ini memungkinkan pengelolaan data yang fleksibel dan efisien, terutama dalam menangani relasi antar data film dan genre.
 
-## *Struktur Data yang Digunakan*
+## **Struktur Data yang Digunakan**
 
 1. *List Parent (Genre)*
    Menyimpan daftar genre film, seperti Action, Drama, Comedy, dan lain-lain.
@@ -30,7 +30,7 @@ Struktur ini memungkinkan pengelolaan data yang fleksibel dan efisien, terutama 
 3. *List Relasi (Relation)*
    Menghubungkan Genre dengan Movie, membentuk relasi *many-to-many* secara implementasi melalui multi-linked list.
 
-## *Fitur dan Menu Aplikasi*
+## **Fitur dan Menu Aplikasi**
 
 Aplikasi menyediakan menu interaktif sebagai berikut:
 
@@ -54,7 +54,7 @@ Aplikasi menyediakan menu interaktif sebagai berikut:
 
 Menu-menu tersebut memastikan seluruh operasi *CRUD (Create, Read, Update, Delete)* dapat dilakukan baik pada Genre, Movie, maupun relasinya.
 
-## *Pembagian Tugas*
+## **Pembagian Tugas**
 
 ### *Anggota 1: Ramadhan Tangguh Defender*
 
@@ -106,6 +106,6 @@ Menu-menu tersebut memastikan seluruh operasi *CRUD (Create, Read, Update, Delet
 * Perancangan *menu utama interaktif (main.cpp)*
 * Penyusunan laporan tugas besar dan pengujian program
 
-## *Kesimpulan*
+## **Kesimpulan**
 
 Dengan mengimplementasikan struktur data *Multi-Linked List*, aplikasi ini mampu mengelola data film dan genre secara efisien serta fleksibel. Program ini tidak hanya memenuhi konsep dasar struktur data, tetapi juga memberikan simulasi nyata penerapan relasi data dalam sebuah aplikasi manajemen.

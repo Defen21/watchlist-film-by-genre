@@ -1,8 +1,4 @@
-## **TUGAS BESAR STRUKTUR DATA**
-
-### **Judul**
-
-*Aplikasi Manajemen Watchlist Film Berbasis Genre Menggunakan Multi-Linked List*
+## **Aplikasi Manajemen Watchlist Film Berbasis Genre Menggunakan Multi-Linked List**
 
 ## **Deskripsi**
 
